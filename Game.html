@@ -23,6 +23,7 @@ Project 2 - Game v0.2
 		 var lock10w = true;
 		 var score = 0;
 		 var firstTime = [0,1,2,3,4,5,6,7,8];
+		 var sleeping_grue=false;
 		 var direction = "n";
 		 for(x=0;x<9;x++)
 			firstTime[x]=1;
@@ -30,6 +31,12 @@ Project 2 - Game v0.2
 		 // 00|10|20
 		 // 01|11|21
 		 // 02|12|22
+		 function shutdown(){
+			document.getElementById("btnN").disabled= true;
+			document.getElementById("btnS").disabled= true;
+			document.getElementById("btnE").disabled= true;
+			document.getElementById("btnW").disabled= true;
+		 }
 		 function message(mess){
 			var targetTextArea = document.getElementById("taMain");
 			targetTextArea.value= mess;
@@ -52,6 +59,10 @@ Project 2 - Game v0.2
 			} 
 			else if(ndoor==0){
 				message("You run into a wall.")
+				if(sleeping_grue==true){
+					message("You run into a wall and make a crashing sound. You woke the grue. The grue EATS YOU! Game over.")
+					shutdown()
+				}
 				return(0);
 			}
 			roomCheck();
@@ -74,6 +85,10 @@ Project 2 - Game v0.2
 			}
 			else if(sdoor==0){
 				message("You run into a wall.")
+				if(sleeping_grue==true){
+					message("You run into a wall and make a crashing sound. You woke the grue. The grue EATS YOU! Game over.")
+					shutdown()
+				}
 				return(0);
 			}
 			roomCheck();
@@ -96,6 +111,10 @@ Project 2 - Game v0.2
 			} 
 			else if(edoor==0){
 				message("You run into a wall.")
+				if(sleeping_grue==true){
+					message("You run into a wall and make a crashing sound. You woke the grue. The grue EATS YOU! Game over.")
+					shutdown()
+				}
 				return(0);
 			}
 			roomCheck();
@@ -118,12 +137,17 @@ Project 2 - Game v0.2
 			} 
 			else if(wdoor==0){
 				message("You run into a wall.")
+				if(sleeping_grue==true){
+					message("You run into a wall and make a crashing sound. You woke the grue. The grue EATS YOU! Game over.")
+					shutdown()
+				}
 				return(0);
 			}
 			roomCheck();
          }
 		 
 		 function roomCheck() {
+			sleeping_grue=false;
 			switch(xcoor){
 				case 0:
 					switch(ycoor){
@@ -139,6 +163,7 @@ Project 2 - Game v0.2
 							sdoor = 0;
 							edoor = 1;
 							wdoor = 0;
+							shutdown()
 							break;
 						case 1:
 							if(firstTime[1]==1){
@@ -146,6 +171,7 @@ Project 2 - Game v0.2
 								firstTime[1]--;
 							}
 							message("You see a grue... looks like its sleeping.");
+							sleeping_grue=true;
 							ndoor = 0;
 							sdoor = 0;
 							edoor = 1;
