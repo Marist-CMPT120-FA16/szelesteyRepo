@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 Clayton Szelestey
-9/27/16
+10/17/16
 Project 2 - Game v0.2
 -->
 <html>
@@ -31,6 +31,26 @@ Project 2 - Game v0.2
 		 // 00|10|20
 		 // 01|11|21
 		 // 02|12|22
+		 function btnGo_click(){
+			var input = document.getElementById("txtCommand").value;
+			input = input.toLowerCase();
+			switch(input){
+				case "n":
+					btnN_click();
+					break;
+				case "s":
+					btnS_click();
+					break;
+				case "e":
+					btnE_click();
+					break;
+				case "w":
+					btnW_click();
+					break;
+				default:
+					message("Please enter N, S, E or W.");
+			}
+		 }
 		 function shutdown(){
 			document.getElementById("btnN").disabled= true;
 			document.getElementById("btnS").disabled= true;
@@ -290,6 +310,9 @@ Project 2 - Game v0.2
 	  <input type="button" id="btnS" name="btnS" value="Go South" onclick="btnS_click();">
 	  <input type="button" id="btnE" name="btnE" value="Go East" onclick="btnE_click();">
 	  <input type="button" id="btnW" name="btnW" value="Go West" onclick="btnW_click();">
+	  <br>
+	  <input type="text" id="txtCommand" name="txtCommand">
+	  <input type="button" value="Go" onclick="btnGo_click();">  
 	  <p id="score">Points: 0</p>
 	  
 	  
