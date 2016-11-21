@@ -278,7 +278,7 @@ function btnN_click() {
 		return(0);
 	} 
 	else if(ndoor==0){
-		message("You run into a wall.")
+		message("You run into a wall.");
 		if(sleeping_grue==true){
 			message("You run into a wall and make a crashing sound. You woke the grue. The grue EATS YOU! Game over.");
 			shutdown();
@@ -304,7 +304,7 @@ function btnS_click() {
 		return(0);
 	}
 	else if(sdoor==0){
-		message("You run into a wall.")
+		message("You run into a wall.");
 		if(sleeping_grue==true){
 			message("You run into a wall and make a crashing sound. You woke the grue. The grue EATS YOU! Game over.");
 			shutdown();
@@ -330,7 +330,7 @@ function btnE_click() {
 		return(0);
 	} 
 	else if(edoor==0){
-		message("You run into a wall.")
+		message("You run into a wall.");
 		if(sleeping_grue==true){
 			message("You run into a wall and make a crashing sound. You woke the grue. The grue EATS YOU! Game over.");
 			shutdown();
@@ -356,7 +356,7 @@ function btnW_click() {
 		return(0);
 	} 
 	else if(wdoor==0){
-		message("You run into a wall.")
+		message("You run into a wall.");
 		if(sleeping_grue==true){
 			message("You run into a wall and make a crashing sound. You woke the grue. The grue EATS YOU! Game over.");
 			shutdown();
