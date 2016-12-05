@@ -1,9 +1,8 @@
-var xcoor = 1;
-var ycoor = 1;
 var ndoor = 1;
 var sdoor = 1;
 var edoor = 1;
 var wdoor = 1;
+var id = 4;
 var lock10w = true;
 var grue01 = true;
 var score = 0;
@@ -14,12 +13,31 @@ var items = [0,1,2,3];
 var rooms = [0,1,2,3,4,5,6,7,8,9,10,11];
 
 // little map of the game below
-// 00|10|20|30
-// 01|11|21|31
-// 02|12|22|32
+// 0|3|6|9
+// 1|4|7|10
+// 2|5|8|11
 
 function init(){
 	message("You find yourself in what appears to be a castle dungeon, there are doors to the north, south, east and west.");
+}
+
+function move(){
+	switch(direction){
+		case 'n':
+			id = id-1;
+			break;
+		case 's':
+			id = id+1;
+			break;
+		case 'e':
+			id = id+3;
+			break;
+		case 'w':
+			id = id-3;
+			break;
+	}
+	rooms[id].activate();
+	document.getElementById("score").innerHTML="Points: "+score;
 }
 
 function shutdown(){
@@ -116,7 +134,7 @@ function Location(id,description,sdescription, item,a,b,c,d){
 		document.getElementById("btnS").disabled= !this.s;
 		document.getElementById("btnE").disabled= !this.e;
 		document.getElementById("btnW").disabled= !this.w;
-		if(xcoor==0&&ycoor==0)
+		if(id==0)
 			shutdown();
 	}
 	this.toString=function(){return this.name;};
@@ -185,22 +203,22 @@ function btnGo_click(){
 			btnW_click();
 			break;
 		case "take":
-			if(keyq.Status==0&&xcoor==1&&ycoor==2){
+			if(keyq.Status==0&&id==5){
 				keyq.take();
 				message("You pick up a key!");
 				break;
 			}
-			if(gunq.Status==0&&xcoor==3&&ycoor==1){
+			if(gunq.Status==0&&id==10){
 				gunq.take();
 				message("You pick up a gun!");
 				break;
 			}
-			if(bullet1.Status==0&&xcoor==3&&ycoor==2){
+			if(bullet1.Status==0&&id==11){
 				bullet1.take();
 				message("You pick up a silver bullet!");
 				break;
 			}
-			if(bullet2.Status==0&&xcoor==3&&ycoor==0){
+			if(bullet2.Status==0&&id==9){
 				bullet2.take();
 				message("You pick up a bullet!");
 				break;
@@ -211,7 +229,7 @@ function btnGo_click(){
 			if(gunq.Status>0){
 				if(bullet1.Status>0){
 					bullet1.use();
-					if(xcoor==0&&ycoor==1){
+					if(id==1){
 						grue01=false;
 						sleeping_grue=false;
 						message("You shot the grue! It is making a gurgling sound. Looks like it won't survive...");
@@ -224,7 +242,7 @@ function btnGo_click(){
 				}
 				else if(bullet2.Status>0){
 					bullet2.use();
-					if(xcoor==0&&ycoor==1){
+					if(id==1){
 						grue01=false;
 						sleeping_grue=false;
 						message("You shot the grue! It is making a gurgling sound. Looks like it won't survive...");
@@ -264,12 +282,8 @@ function btnGo_click(){
 
 function btnN_click() {
 	direction = "n";
-	if(ndoor==1)
-		ycoor--;
-	else if(ndoor==2&&keyq.Status==1){
-		roomCheck();
+	if(ndoor==2&&keyq.Status==1){
 		ndoor--;
-		ycoor--;
 		keyq.use();
 		alert("You used a key!");
 	}
@@ -285,17 +299,13 @@ function btnN_click() {
 		}
 		return(0);
 	}
-	roomCheck();
+	move();
 }
 		 
 function btnS_click() {
 	direction = "s";
-	if(sdoor==1)
-		ycoor++;
-	else if(sdoor==2&&keyq.Status==1){
-		roomCheck();
+	if(sdoor==2&&keyq.Status==1){
 		sdoor--;
-		ycoor++;
 		keyq.use();
 		alert("You used a key!");
 	}
@@ -311,17 +321,13 @@ function btnS_click() {
 		}
 		return(0);
 	}
-	roomCheck();
+	move();
 }
 		 
 function btnE_click() {
 	direction = "e";
-	if(edoor==1)
-		xcoor++;
-	else if(edoor==2&&keyq.Status==1){
-		roomCheck();
+	if(edoor==2&&keyq.Status==1){
 		edoor--;
-		xcoor++;
 		keyq.use();
 		alert("You used a key!");
 	}
@@ -337,17 +343,13 @@ function btnE_click() {
 		}
 		return(0);
 	}
-	roomCheck();
+	move();
 }
 		 
 function btnW_click() {
 	direction = "w";
-	if(wdoor==1)
-		xcoor--;
-	else if(wdoor==2&&keyq.Status==1){
-		roomCheck();
+	if(wdoor==2&&keyq.Status==1){
 		wdoor--;
-		xcoor--;
 		keyq.use();
 		alert("You used a key!");
 	}
@@ -363,66 +365,5 @@ function btnW_click() {
 		}
 		return(0);
 	}
-	roomCheck();
+	move();
 }		
-
-function roomCheck() {
-	var x; //location id
-	sleeping_grue=false;
-	switch(xcoor){
-		case 0:
-			switch(ycoor){
-				case 0:
-					x=0;
-					break;
-				case 1:
-					x=1;
-					break;
-				case 2:
-					x=2;
-					break;
-			}
-			break;
-		case 1:
-			switch(ycoor){
-				case 0:
-					x=3;
-					break;
-				case 1:
-					x=4;
-					break;
-				case 2:
-					x=5;
-					break;
-			}
-			break;
-		case 2:
-			switch(ycoor){
-				case 0:
-					x=6;
-					break;
-				case 1:
-					x=7;
-					break;
-				case 2:
-					x=8;
-					break;
-			}
-			break;
-		case 3:
-			switch(ycoor){
-				case 0:
-					x=9;
-					break;
-				case 1:
-					x=10;
-					break;
-				case 2:
-					x=11;
-					break;
-			}
-			break;
-	}
-	rooms[x].activate();
-	document.getElementById("score").innerHTML="Points: "+score;
-}
